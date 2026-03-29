@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Kimberly 🌸</title>
+<style>
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* LOCK SCREEN */
+#lockScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#1a1a40, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    z-index: 10;
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* MAIN SCENE */
+.scene {
+    display: none;
+}
+
+/* SKY */
+.sky {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #ffb6f9, #87cefa);
+    animation: dayNight 25s infinite alternate;
+}
+
+@keyframes dayNight {
+    100% { background: linear-gradient(to top, #0a0a2a, #000); }
+}
+
+/* SUN */
+.sun {
+    position: absolute;
+    top: 60px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #fff176, #ff9800);
+    border-radius: 50%;
+    box-shadow: 0 0 40px #ffeb3b, 0 0 80px #ff9800;
+}
+
+/* STARS */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    animation: starsFade 25s infinite alternate;
+}
+
+@keyframes starsFade {
+    100% { opacity: 1; }
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+}
+
+/* FLOWERS (IMPROVED) */
+.flower {
+    position: absolute;
+    bottom: 0;
+    width: 12px;
+    height: 100px;
+    background: linear-gradient(green, darkgreen);
+    animation: sway 4s infinite alternate;
+}
+
+.flower:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, pink, purple);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,105,180,0.8);
+}
+
+/* many flowers */
+.flower:nth-child(1){ left:10%;}
+.flower:nth-child(2){ left:20%;}
+.flower:nth-child(3){ left:30%;}
+.flower:nth-child(4){ left:40%;}
+.flower:nth-child(5){ left:50%;}
+.flower:nth-child(6){ left:60%;}
+.flower:nth-child(7){ left:70%;}
+.flower:nth-child(8){ left:80%;}
+
+@keyframes sway {
+    to { transform: rotate(4deg); }
+}
+
+/* BUTTERFLY FOLLOW */
+.butterfly {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+}
+
+.butterfly:before, .butterfly:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background: linear-gradient(pink, purple);
+    border-radius: 50%;
+}
+
+/* PETALS */
+.petal {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: pink;
+    border-radius: 50%;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); }
+}
+
+/* MESSAGE */
+.message {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    color: white;
+    text-shadow: 0 0 10px pink, 0 0 20px purple;
+}
+
+/* TYPING */
+.typing::after {
+    content: "|";
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+    <h2>Enter Password 🔒</h2>
+    <input type="password" id="pass" placeholder="Enter password">
+    <button onclick="unlock()">Unlock</button>
+</div>
+
+<!-- MAIN -->
+<div class="scene" id="scene">
+
+<div class="sky"></div>
+<div class="sun"></div>
+
+<div class="stars">
+    <div class="star" style="top:20%;left:30%"></div>
+    <div class="star" style="top:40%;left:70%"></div>
+</div>
+
+<div class="butterfly" id="butterfly"></div>
+
+<!-- FLOWERS -->
+<div class="flower"></div><div class="flower"></div>
+<div class="flower"></div><div class="flower"></div>
+<div class="flower"></div><div class="flower"></div>
+<div class="flower"></div><div class="flower"></div>
+
+<div class="message typing" id="msg"></div>
+
+</div>
+
+<script>
+
+/* PASSWORD */
+function unlock(){
+    let p = document.getElementById("pass").value;
+    if(p === "kim123"){   // 🔑 change password here
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("scene").style.display = "block";
+        typeText();
+    } else {
+        alert("Wrong password");
+    }
+}
+
+/* TYPING EFFECT */
+const text = "Hey Kimberly 🌸 — just wanted to remind you that you make things feel lighter and brighter.";
+let i = 0;
+
+function typeText(){
+    if(i < text.length){
+        document.getElementById("msg").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeText, 40);
+    }
+}
+
+/* BUTTERFLY FOLLOW */
+document.addEventListener("mousemove", e => {
+    let b = document.getElementById("butterfly");
+    b.style.left = e.clientX + "px";
+    b.style.top = e.clientY + "px";
+});
+
+/* PETALS */
+for(let i=0;i<25;i++){
+    let p = document.createElement("div");
+    p.className="petal";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(p);
+}
+
+</script>
+
+</body>
+</html>
