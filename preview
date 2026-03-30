@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Kimberly 🌸</title>
+<title>For Rashely 🌸</title>
 <style>
 
 body {
@@ -219,7 +219,7 @@ button {
 /* PASSWORD */
 function unlock(){
     let p = document.getElementById("pass").value;
-    if(p === "kim2006"){   // 🔑 change password here
+    if(p === "rash2002"){   // 🔑 change password here
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("scene").style.display = "block";
         typeText();
@@ -229,7 +229,7 @@ function unlock(){
 }
 
 /* TYPING EFFECT */
-const text = "Hey Kimberly 🌸 — just wanted to remind you that you make things feel lighter and brighter never stop smiling.";
+const text = "Hey rashely 🌸 — just wanted to remind you that you make things feel lighter and brighter never stop smiling.";
 let i = 0;
 
 function typeText()
